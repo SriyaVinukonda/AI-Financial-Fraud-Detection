@@ -1,4 +1,4 @@
-# AI Financial Fraud Detection System — Version 2
+# AI Financial Fraud Detection System
 
 An end-to-end machine learning system for detecting potentially fraudulent financial transactions and assigning them a **LOW, MEDIUM, or HIGH risk level**.
 
