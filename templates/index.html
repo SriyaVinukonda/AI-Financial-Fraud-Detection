@@ -1,0 +1,829 @@
+<!doctype html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+>
+
+<title>
+AI Fraud Detection Command Center
+</title>
+
+<link
+    rel="stylesheet"
+    href="/static/style.css"
+>
+
+</head>
+
+
+<body>
+
+<div class="shell">
+
+
+<!-- ===================================================== -->
+<!-- HEADER -->
+<!-- ===================================================== -->
+
+<header>
+
+<div>
+
+<div class="eyebrow">
+FINANCIAL SECURITY • AI RISK ENGINE V2
+</div>
+
+<h1>
+Fraud Detection Command Center
+</h1>
+
+<p>
+Real public data • Machine learning • Live monitoring • Preventive controls
+</p>
+
+</div>
+
+<div class="live">
+● LIVE
+</div>
+
+</header>
+
+
+<!-- ===================================================== -->
+<!-- KPI -->
+<!-- ===================================================== -->
+
+<section class="kpis">
+
+<div class="kpi">
+
+<span>MONITORED</span>
+
+<b id="total">0</b>
+
+</div>
+
+
+<div class="kpi danger">
+
+<span>HIGH RISK</span>
+
+<b id="high">0</b>
+
+</div>
+
+
+<div class="kpi warn">
+
+<span>REVIEW</span>
+
+<b id="review">0</b>
+
+</div>
+
+
+<div class="kpi block">
+
+<span>BLOCKED</span>
+
+<b id="blocked">0</b>
+
+</div>
+
+
+<div class="kpi safe">
+
+<span>ALLOWED</span>
+
+<b id="allowed">0</b>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- MAIN GRID -->
+<!-- ===================================================== -->
+
+<div class="grid2">
+
+
+<!-- ===================================================== -->
+<!-- TRANSACTION SCREENING -->
+<!-- ===================================================== -->
+
+<section class="panel">
+
+<h2>
+Real-Time Transaction Screening
+</h2>
+
+<p class="hint">
+
+Enter normal transaction details. The AI engine converts
+these values into the model's internal V1–V28 features.
+
+</p>
+
+
+<div id="form" class="formgrid">
+
+
+<label>
+
+Amount (₹)
+
+<input
+    id="Amount"
+    type="number"
+    min="1"
+    step="any"
+    value="250"
+>
+
+</label>
+
+
+<label>
+
+Transaction Type
+
+<select id="TransactionType">
+
+<option value="purchase">
+Purchase
+</option>
+
+<option value="transfer">
+Money Transfer
+</option>
+
+<option value="withdrawal">
+Cash Withdrawal
+</option>
+
+</select>
+
+</label>
+
+
+<label>
+
+Location
+
+<select id="Location">
+
+<option value="usual">
+Usual Location
+</option>
+
+<option value="unusual">
+Unusual Location
+</option>
+
+</select>
+
+</label>
+
+
+<label>
+
+Device
+
+<select id="Device">
+
+<option value="usual">
+Usual Device
+</option>
+
+<option value="new">
+New Device
+</option>
+
+</select>
+
+</label>
+
+
+<label>
+
+Transaction Hour
+
+<input
+    id="Hour"
+    type="number"
+    min="0"
+    max="23"
+    value="14"
+>
+
+</label>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- BUTTONS -->
+<!-- ===================================================== -->
+
+<div class="buttons">
+
+<button
+    onclick="test(false)"
+>
+
+Test Normal Transaction
+
+</button>
+
+
+<button
+    class="dangerBtn"
+    onclick="test(true)"
+>
+
+Test Suspicious Transaction
+
+</button>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- RESULT -->
+<!-- ===================================================== -->
+
+<div
+    id="result"
+    class="result hidden"
+>
+</div>
+
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- PREVENTIVE ENGINE -->
+<!-- ===================================================== -->
+
+<section class="panel">
+
+<h2>
+Preventive Action Engine
+</h2>
+
+
+<div class="flow">
+
+<div>
+
+<b>1</b>
+
+<span>
+Transaction
+</span>
+
+</div>
+
+
+<i>
+→
+</i>
+
+
+<div>
+
+<b>2</b>
+
+<span>
+ML Score
+</span>
+
+</div>
+
+
+<i>
+→
+</i>
+
+
+<div>
+
+<b>3</b>
+
+<span>
+Risk
+</span>
+
+</div>
+
+
+<i>
+→
+</i>
+
+
+<div>
+
+<b>4</b>
+
+<span>
+Action
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="actions">
+
+
+<div class="action allow">
+
+<b>
+ALLOW
+</b>
+
+<span>
+LOW RISK
+</span>
+
+<small>
+Continue transaction
+</small>
+
+</div>
+
+
+<div class="action review">
+
+<b>
+REVIEW
+</b>
+
+<span>
+MEDIUM RISK
+</span>
+
+<small>
+Hold + verify
+</small>
+
+</div>
+
+
+<div class="action block">
+
+<b>
+BLOCK
+</b>
+
+<span>
+HIGH RISK
+</span>
+
+<small>
+Stop transaction
+</small>
+
+</div>
+
+
+</div>
+
+
+
+<div class="modelbox">
+
+<b>
+Model:
+</b>
+
+Imbalance-aware Random Forest
+
+<br>
+
+
+<b>
+Decision threshold:
+</b>
+
+<span id="threshold">
+loading
+</span>
+
+<br>
+
+
+<b>
+Dataset:
+</b>
+
+284,807 anonymized transactions
+
+</div>
+
+
+</section>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- MODEL PERFORMANCE -->
+<!-- ===================================================== -->
+
+<section class="panel">
+
+<h2>
+Model Performance
+</h2>
+
+<div
+    id="metrics"
+    class="metrics"
+>
+Loading...
+</div>
+
+</section>
+
+
+
+<!-- ===================================================== -->
+<!-- TRANSACTION MONITORING -->
+<!-- ===================================================== -->
+
+<section class="panel">
+
+<h2>
+Recent Transaction Monitoring
+</h2>
+
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+ID
+</th>
+
+<th>
+Time
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Fraud probability
+</th>
+
+<th>
+Risk
+</th>
+
+<th>
+Preventive action
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="rows">
+
+</tbody>
+
+
+</table>
+
+</div>
+
+</section>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+
+// =========================================================
+// READ FORM
+// =========================================================
+
+function values() {
+
+    return {
+
+        Amount:
+            Number(
+                document.getElementById("Amount").value
+            ),
+
+        TransactionType:
+            document.getElementById("TransactionType").value,
+
+        Location:
+            document.getElementById("Location").value,
+
+        Device:
+            document.getElementById("Device").value,
+
+        Hour:
+            Number(
+                document.getElementById("Hour").value
+            )
+
+    };
+
+}
+
+
+
+// =========================================================
+// TEST TRANSACTION
+// =========================================================
+
+async function test(bad){
+
+    // Always use the values entered by the user
+    let x = values();
+
+    let r = await fetch("/predict", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(x)
+    });
+
+    let z = await r.json();
+
+    let el = document.getElementById("result");
+
+    el.className = "result " + z.risk.toLowerCase();
+
+    el.innerHTML = `
+        <div>
+            <span>RISK LEVEL</span>
+            <b>${z.risk}</b>
+        </div>
+
+        <div>
+            <span>FRAUD PROBABILITY</span>
+            <b>${(z.fraud_probability * 100).toFixed(2)}%</b>
+        </div>
+
+        <div>
+            <span>PREVENTIVE ACTION</span>
+            <b>${z.preventive_action}</b>
+        </div>
+
+        <div class="alert">
+            <strong>${z.alert}</strong><br>
+            ${z.preventive_reason}
+        </div>
+    `;
+
+    refresh();
+}
+
+
+
+// =========================================================
+// REFRESH DASHBOARD
+// =========================================================
+
+async function refresh() {
+
+
+    try {
+
+
+        let [
+
+            s,
+
+            t,
+
+            m
+
+        ] = await Promise.all([
+
+            fetch("/stats")
+                .then(r => r.json()),
+
+            fetch("/transactions")
+                .then(r => r.json()),
+
+            fetch("/model-info")
+                .then(r => r.json())
+
+        ]);
+
+
+        // -------------------------------------------------
+        // KPI
+        // -------------------------------------------------
+
+        document.getElementById("total")
+            .textContent = s.total;
+
+
+        document.getElementById("high")
+            .textContent = s.high;
+
+
+        document.getElementById("review")
+            .textContent = s.review;
+
+
+        document.getElementById("blocked")
+            .textContent = s.blocked;
+
+
+        document.getElementById("allowed")
+            .textContent = s.allowed;
+
+
+
+        // -------------------------------------------------
+        // THRESHOLD
+        // -------------------------------------------------
+
+        document.getElementById("threshold")
+            .textContent =
+            (m.metrics.threshold * 100).toFixed(2) + "%";
+
+
+
+        // -------------------------------------------------
+        // MODEL METRICS
+        // -------------------------------------------------
+
+        const metricKeys = [
+
+            "random_forest_roc_auc",
+
+            "random_forest_pr_auc",
+
+            "precision",
+
+            "recall",
+
+            "f1"
+
+        ];
+
+
+        const metricNames = [
+
+            "ROC-AUC",
+
+            "PR-AUC",
+
+            "PRECISION",
+
+            "RECALL",
+
+            "F1"
+
+        ];
+
+
+        document.getElementById("metrics")
+            .innerHTML = metricKeys.map(
+                (k, i) => `
+
+                    <div>
+
+                        <span>
+                            ${metricNames[i]}
+                        </span>
+
+                        <b>
+                            ${m.metrics[k]}
+                        </b>
+
+                    </div>
+
+                `
+            ).join("");
+
+
+
+        // -------------------------------------------------
+        // TRANSACTION TABLE
+        // -------------------------------------------------
+
+        document.getElementById("rows")
+            .innerHTML = t.map(
+                x => `
+
+                    <tr>
+
+                        <td>
+                            ${x.id}
+                        </td>
+
+                        <td>
+                            ${x.timestamp}
+                        </td>
+
+                        <td>
+                            ₹${Number(x.amount).toFixed(2)}
+                        </td>
+
+                        <td>
+                            ${(x.fraud_probability * 100).toFixed(2)}%
+                        </td>
+
+                        <td>
+
+                            <b class="${x.risk.toLowerCase()}">
+
+                                ${x.risk}
+
+                            </b>
+
+                        </td>
+
+                        <td>
+
+                            <b>
+                                ${x.action}
+                            </b>
+
+                        </td>
+
+                        <td>
+                            ${x.status}
+                        </td>
+
+                    </tr>
+
+                `
+            ).join("");
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Dashboard refresh error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+// =========================================================
+// INITIAL LOAD
+// =========================================================
+
+refresh();
+
+
+</script>
+
+
+</body>
+
+</html>

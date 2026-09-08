@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python tools
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Model files
+*.joblib
+*.pkl
+
+# Temporary files
+*.tmp
+*.temp
