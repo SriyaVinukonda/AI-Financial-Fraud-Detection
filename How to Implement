@@ -1,0 +1,19 @@
+Running the Project on Windows
+
+1. Clone the repository
+git clone https://github.com/SriyaVinukonda/AI-Financial-Fraud-Detection.git
+
+2. Open the project
+cd AI-Financial-Fraud-Detection
+
+3. Install dependencies
+pip install -r requirements.txt
+
+4. Run the application
+.\run_windows.bat
+
+The first run may download the public dataset and train the machine learning model, so it may take several minutes.
+
+5. Open the dashboard
+Open:
+http://127.0.0.1:8000
