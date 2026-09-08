@@ -1,45 +1,120 @@
 # AI Financial Fraud Detection System — Version 2
 
-College-level end-to-end fraud detection project using a real public benchmark dataset.
+An end-to-end machine learning system for detecting potentially fraudulent financial transactions and assigning them a **LOW, MEDIUM, or HIGH risk level**.
 
-## Public dataset
-Credit Card Fraud Detection — ULB / European cardholders.
-- 284,807 transactions
-- 492 frauds
-- about 0.172% fraud rate
-- anonymized PCA features V1-V28, Time, Amount and Class
+The project combines machine learning, a FastAPI backend, a SQLite transaction database, and a web-based monitoring dashboard to demonstrate how automated fraud screening can support preventive financial security.
 
-The raw CSV is not bundled because it is about 150 MB. The first run automatically downloads it from:
-https://zenodo.org/records/7395559
+---
 
-Alternative:
-https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+## Project Overview
 
-## Advanced features
-- Real public dataset
-- duplicate/missing-value checks
-- Amount log transform
-- class-imbalance-aware Random Forest
+Financial fraud detection is challenging because fraudulent transactions are extremely rare compared with legitimate transactions.
+
+This project uses a real-world public credit card transaction dataset containing **284,807 transactions**, including only **492 fraudulent transactions**. The system is designed to handle this severe class imbalance while providing an interpretable risk-based decision process.
+
+The workflow is:
+
+**Transaction Input → Data Processing → ML Prediction → Fraud Probability → Risk Classification → Preventive Action**
+
+Depending on the predicted fraud probability, the system assigns:
+
+| Risk Level | Preventive Action |
+|------------|-------------------|
+| LOW | ALLOW |
+| MEDIUM | REVIEW |
+| HIGH | BLOCK |
+
+> **Note:** The ALLOW / REVIEW / BLOCK actions are simulated preventive actions for this academic/internship project. They do not actually interact with a bank, UPI network, card network, or financial account.
+
+---
+
+## Key Features
+
+- Real public financial transaction dataset
+- Handling of highly imbalanced fraud data
+- Missing-value and duplicate checks
+- Amount transformation using `log1p`
+- Imbalance-aware Random Forest classifier
 - Logistic Regression baseline
-- ROC-AUC, PR-AUC, precision, recall and F1
-- automatic decision threshold
-- feature importance report
-- FastAPI real-time scoring
-- SQLite transaction history
-- live monitoring dashboard
-- explicit ALLOW / REVIEW / BLOCK preventive actions
-- risk alerts
-- model performance panel
+- Automatic decision-threshold selection
+- Fraud probability prediction
+- LOW / MEDIUM / HIGH risk classification
+- ALLOW / REVIEW / BLOCK preventive actions
+- FastAPI backend for real-time prediction
+- SQLite database for transaction history
+- Live transaction monitoring dashboard
+- Model performance metrics
+- Feature importance analysis
+- Risk alerts and preventive explanations
+- Simple user-friendly transaction input interface
 
-## Windows
-Open PowerShell in the project folder and run:
+---
 
-.un_windows.bat
+## Dataset
 
-First run downloads the public dataset and trains the model, so allow several minutes.
+The project uses the **Credit Card Fraud Detection** dataset released by ULB / European cardholders.
 
-Then open http://127.0.0.1:8000
+### Dataset Statistics
 
-If automatic download fails, manually download creditcard.csv from the Zenodo page above and put it in data\creditcard.csv, then rerun.
+- **Total transactions:** 284,807
+- **Fraudulent transactions:** 492
+- **Legitimate transactions:** 284,315
+- **Fraud rate:** approximately 0.172%
+- **Features:** Time, V1–V28, Amount
+- **Target:** Class
 
-This is an academic/demo system. Preventive actions are simulated and should not be connected to real financial accounts without security, compliance, model-governance and human-review controls.
+The V1–V28 variables are anonymized numerical features generated through PCA transformation. They represent patterns in the original transaction data rather than directly understandable fields such as location or transaction type.
+
+### Dataset Source
+
+The dataset can be obtained from:
+
+- Zenodo: https://zenodo.org/records/7395559
+- Kaggle: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
+
+The raw CSV file is **not stored in this GitHub repository** because it is approximately 150 MB and exceeds GitHub's standard 100 MB file-size limit.
+
+The project includes a script that can download the dataset during setup.
+
+---
+
+## System Architecture
+
+```text
+                   User
+                    |
+                    v
+          Transaction Dashboard
+                    |
+                    v
+             FastAPI Backend
+                    |
+                    v
+          Input Validation
+                    |
+                    v
+           Data Preprocessing
+                    |
+                    v
+          Random Forest Model
+                    |
+                    v
+          Fraud Probability
+                    |
+                    v
+          Risk Decision Engine
+             /      |       \
+            /       |        \
+          LOW     MEDIUM     HIGH
+           |         |         |
+        ALLOW     REVIEW     BLOCK
+           \         |         /
+            \        |        /
+             v       v       v
+             Transaction Log
+                    |
+                    v
+              SQLite Database
+                    |
+                    v
+             Monitoring Dashboard
