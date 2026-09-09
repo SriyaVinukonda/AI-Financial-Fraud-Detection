@@ -1,0 +1,11 @@
+## LIVE DEMO LINK:
+
+https://ai-financial-fraud-detection-2j63.onrender.com/
+
+The deployed system provides:
+- Real-time transaction screening
+- ML-based fraud probability
+- LOW / MEDIUM / HIGH risk classification
+- ALLOW / REVIEW / BLOCK preventive actions
+- Transaction history
+- Model performance metrics
